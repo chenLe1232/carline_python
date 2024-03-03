@@ -2,8 +2,21 @@ from peewee import *
 from playhouse.db_url import connect
 from playhouse.migrate import *
 from jobs import *
+import os
 
-db = connect('mysql://root:lechen9527@127.0.0.1:3306/video_job')
+# 连接数据库
+# 为了安全 账号密码写在环境变量中 从环境变量中获取账号密码
+password = os.environ.get('MyPASSWORD1')
+table_name = os.environ.get('MYSQL_TABLE_NAME')
+host = os.environ.get('MYSQL_HOST')
+port = os.environ.get('MYSQL_PORT')
+user_name = os.environ.get('MYSQL_USER_NAME')
+print(f'mysql://{user_name}:{password}@{host}:{port}/{table_name}')
+if not password:
+    raise ValueError('MYSQL_PASSWORD is not set')
+if not password:
+    raise ValueError('MYSQL_PASSWORD is not set')
+db = connect(f'mysql://{user_name}:{password}@{host}:{port}/{table_name}')
 
 
 class User(Model):
